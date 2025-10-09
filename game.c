@@ -5,9 +5,9 @@
 // Initialize all levels with themed maps
 int	init_levels(t_game *game)
 {
-	// London - Collect fish & chips 🐟
+	// London - Collect pints of cider 🍺
 	game->levels[LONDON].name = "London";
-	game->levels[LONDON].collectible_name = "Fish & Chips";
+	game->levels[LONDON].collectible_name = "Pints of Cider";
 	game->levels[LONDON].width = 15;
 	game->levels[LONDON].height = 10;
 	game->levels[LONDON].total_collectibles = 3;

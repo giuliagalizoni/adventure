@@ -1,4 +1,9 @@
-# Adventure Game 💕
+# Adventure ## Cities & Collectibles
+- 🇬🇧 **London**: Pints of Cider (3 to collect)
+- 🇫🇷 **Paris**: Croissants (4 to collect)
+- 🇮🇹 **Rome**: Gelatos (5 to collect)
+- 🇩🇪 **Berlin**: Döner (6 to collect)
+- 🇳🇱 **Amsterdam**: Stroopwafels (7 to collect)
 
 A### Game Elements Visual Guide:**
 - 🟫 **Brown blocks:** Walls (can't pass through)
