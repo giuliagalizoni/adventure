@@ -1,0 +1,19 @@
+# Adventure Game - Essential .gitignore
+
+# Compiled files
+adventure
+*.o
+
+# MinilibX build artifacts
+minilibx/libmlx.a
+minilibx/libmlx_Darwin.a
+minilibx/*.o
+minilibx/obj/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+*.swp
