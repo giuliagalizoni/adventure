@@ -1,7 +1,7 @@
 #ifndef ADVENTURE_H
 # define ADVENTURE_H
 
-# include "minilibx/mlx.h"
+# include <mlx.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>

@@ -102,13 +102,35 @@ make re
 - **Move counter** to track your steps
 - **Beautiful city-themed maps** representing our travels
 
+## Project Structure
+```
+adventure/
+├── src/           # Source code files
+│   ├── main.c     # Main game loop and initialization
+│   └── game.c     # Game logic and rendering
+├── includes/      # Header files
+│   └── adventure.h
+├── assets/        # Game sprites (XPM format)
+│   ├── cider.xpm
+│   ├── croissant.xpm
+│   ├── döner.xpm
+│   ├── gelato.xpm
+│   ├── moka.xpm
+│   ├── player_*.xpm
+│   └── stroopwafel.xpm
+├── obj/           # Compiled object files (auto-generated)
+├── minilibx/      # MinilibX graphics library
+└── Makefile       # Build configuration
+```
+
 ## Technical Details
 - Built with **minilibX** graphics library
 - Written in **C** following 42 school standards
 - Uses **tile-based rendering** system (40×40 pixel tiles)
 - **Optimized window size** (680×480) perfectly fits the 15×10 map
 - **Event-driven** input handling
-- **Modular design** for easy expansion
+- **Professional project structure** with organized directories
+- **XPM sprite assets** ready for implementation
 
 ## Future Enhancements Ideas
 - Add sprite images instead of colored squares

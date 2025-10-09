@@ -1,5 +1,6 @@
 #include "adventure.h"
 #include <stdio.h>
+#include <string.h>
 
 // Initialize the game window and mlx
 int	init_game(t_game *game)
@@ -76,6 +77,9 @@ int	game_loop(t_game *game)
 int	main(void)
 {
 	t_game	game;
+
+	// Initialize game structure to zero/null
+	memset(&game, 0, sizeof(t_game));
 
 	printf("🎮 Welcome to the Adventure Game! 🎮\n");
 	printf("A romantic journey through London, Paris, Rome, Berlin & Amsterdam...\n\n");

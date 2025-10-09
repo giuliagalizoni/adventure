@@ -116,13 +116,35 @@ int	init_levels(t_game *game)
 	{
 		game->levels[level].map = malloc(sizeof(char *) * game->levels[level].height);
 		if (!game->levels[level].map)
+		{
+			// Clean up previously allocated memory
+			for (int cleanup = 0; cleanup < level; cleanup++)
+			{
+				for (int j = 0; j < game->levels[cleanup].height; j++)
+					free(game->levels[cleanup].map[j]);
+				free(game->levels[cleanup].map);
+			}
 			return (0);
+		}
 
 		for (int i = 0; i < game->levels[level].height; i++)
 		{
 			game->levels[level].map[i] = malloc(sizeof(char) * (game->levels[level].width + 1));
 			if (!game->levels[level].map[i])
+			{
+				// Clean up this level's partial allocation
+				for (int cleanup_i = 0; cleanup_i < i; cleanup_i++)
+					free(game->levels[level].map[cleanup_i]);
+				free(game->levels[level].map);
+				// Clean up previous levels
+				for (int cleanup = 0; cleanup < level; cleanup++)
+				{
+					for (int j = 0; j < game->levels[cleanup].height; j++)
+						free(game->levels[cleanup].map[j]);
+					free(game->levels[cleanup].map);
+				}
 				return (0);
+			}
 
 			// Copy the appropriate map
 			if (level == LONDON)
@@ -144,8 +166,18 @@ int	init_levels(t_game *game)
 // Initialize player position
 void	init_player(t_game *game)
 {
+	if (!game)
+		return;
+
 	game->player.move_count = 0;
 	game->player.sprite_char = 'P';
+
+	// Initialize positions to safe defaults
+	game->player.pos.x = 1;
+	game->player.pos.y = 1;
+	game->player.old_pos = game->player.pos;
+	game->moka_pos_x = 1;
+	game->moka_pos_y = 1;
 
 	// Find player starting position in current level
 	for (int y = 0; y < game->levels[game->current_level].height; y++)
@@ -157,13 +189,11 @@ void	init_player(t_game *game)
 				game->player.pos.x = x;
 				game->player.pos.y = y;
 				game->player.old_pos = game->player.pos;
-
-				// Find Moka's position too
-				if (game->levels[game->current_level].map[y][x] == MOKA)
-				{
-					game->moka_pos_x = x;
-					game->moka_pos_y = y;
-				}
+			}
+			else if (game->levels[game->current_level].map[y][x] == MOKA)
+			{
+				game->moka_pos_x = x;
+				game->moka_pos_y = y;
 			}
 		}
 	}
@@ -228,6 +258,9 @@ void	advance_to_next_level(t_game *game)
 // Move player
 int	move_player(t_game *game, int dx, int dy)
 {
+	if (!game)
+		return (0);
+
 	int new_x = game->player.pos.x + dx;
 	int new_y = game->player.pos.y + dy;
 
@@ -255,9 +288,24 @@ int	move_player(t_game *game, int dx, int dy)
 // Check if move is valid
 int	is_valid_move(t_game *game, int x, int y)
 {
+	if (!game)
+		return (0);
+
+	// Check if current level is valid
+	if (game->current_level < 0 || game->current_level >= MAX_CITIES)
+		return (0);
+
 	t_level *current = &game->levels[game->current_level];
 
+	// Check if map exists
+	if (!current->map)
+		return (0);
+
 	if (x < 0 || x >= current->width || y < 0 || y >= current->height)
+		return (0);
+
+	// Check if the specific map row exists
+	if (!current->map[y])
 		return (0);
 
 	char tile = current->map[y][x];
@@ -328,9 +376,20 @@ void	draw_map(t_game *game)
 // Draw a single tile (simplified version using rectangles)
 void	draw_tile(t_game *game, char tile, int x, int y)
 {
+	if (!game || !game->mlx || !game->win)
+		return;
+
+	// Bounds checking
+	if (x < 0 || y < 0 || x >= 15 || y >= 10)
+		return;
+
 	int pixel_x = x * TILE_SIZE + 40;  // 40px margin from edge
 	int pixel_y = y * TILE_SIZE + 40;
 	int color;
+
+	// Additional window bounds check
+	if (pixel_x < 0 || pixel_y < 0 || pixel_x >= WIN_WIDTH || pixel_y >= WIN_HEIGHT)
+		return;
 
 	switch (tile)
 	{

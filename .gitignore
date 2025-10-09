@@ -2,7 +2,7 @@
 
 # Compiled files
 adventure
-*.o
+obj/
 
 # MinilibX build artifacts
 minilibx/libmlx.a

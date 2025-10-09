@@ -2,42 +2,50 @@
 
 NAME = adventure
 
-# Source files
+# Directories
+SRC_DIR = src
+INC_DIR = includes
+OBJ_DIR = obj
+MLX_DIR = minilibx
+ASSETS_DIR = assets
+
+# Source files (without directory prefix)
 SRCS = main.c game.c
 
-# Object files
-OBJS = $(SRCS:.c=.o)
+# Add directory prefix to source files
+SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRCS))
+
+# Object files in obj directory
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 # MinilibX settings for macOS
-MLX_DIR = ./minilibx
-
-# Use the macOS version of minilibX
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-
-# Add minilibx directory to include path
-INCLUDES = -I. -I$(MLX_DIR)
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -fsanitize=address
 
 # Include directories
-INCLUDES = -I.
+INCLUDES = -I$(INC_DIR) -I$(MLX_DIR)
 
 # Default target
-all: $(NAME)
+all: $(OBJ_DIR) $(NAME)
+
+# Create obj directory
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 # Build the executable
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
-# Compile source files
-%.o: %.c
+# Compile source files from src/ to obj/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean object files
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 # Clean everything
 fclean: clean
