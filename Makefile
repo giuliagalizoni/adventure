@@ -10,7 +10,7 @@ MLX_DIR = minilibx
 ASSETS_DIR = assets
 
 # Source files (without directory prefix)
-SRCS = main.c game.c
+SRCS = main.c game.c levels.c player.c rendering.c sprites.c
 
 # Add directory prefix to source files
 SRC_FILES = $(addprefix $(SRC_DIR)/, $(SRCS))
@@ -20,10 +20,10 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 
 # MinilibX settings for macOS
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -fsanitize=address
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 # Include directories
 INCLUDES = -I$(INC_DIR) -I$(MLX_DIR)

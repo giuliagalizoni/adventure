@@ -8,7 +8,7 @@
 
 // Window settings
 # define WIN_WIDTH 680   // 15 tiles * 40px + 40px margins on each side
-# define WIN_HEIGHT 480  // 10 tiles * 40px + 40px margins on each side
+# define WIN_HEIGHT 560  // 11 tiles * 40px + 40px top margin + 40px bottom + UI space
 # define TILE_SIZE 40
 # define MARGIN 40       // Margin around the game area
 
@@ -35,6 +35,7 @@
 // Game states
 typedef enum e_game_state
 {
+	GAME_MENU,
 	GAME_PLAYING,
 	GAME_LEVEL_COMPLETE,
 	GAME_WON,
@@ -47,8 +48,8 @@ typedef enum e_city
 	LONDON = 0,
 	PARIS = 1,
 	ROME = 2,
-	BERLIN = 3,
-	AMSTERDAM = 4,
+	AMSTERDAM = 3,
+	BERLIN = 4,
 	MAX_CITIES = 5
 }	t_city;
 
@@ -80,11 +81,33 @@ typedef struct s_level
 	int			collected;
 }	t_level;
 
+// Sprites structure
+typedef struct s_sprites
+{
+	void		*player_front;
+	void		*moka;
+	void		*cider;
+	void		*croissant;
+	void		*gelato;
+	void		*doner;
+	void		*stroopwafel;
+	void		*wall;
+	void		*floor;
+	void		*exit;
+	void		*menu_bg;
+	void		*london_bg;
+	void		*paris_bg;
+	void		*rome_bg;
+	void		*amsterdam_bg;
+	void		*berlin_bg;
+}	t_sprites;
+
 // Game structure
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	t_sprites	sprites;
 	t_level		levels[MAX_CITIES];
 	int			current_level;
 	t_player	player;
@@ -99,6 +122,8 @@ typedef struct s_game
 int		init_game(t_game *game);
 int		init_levels(t_game *game);
 void	init_player(t_game *game);
+int		load_sprites(t_game *game);
+void	free_sprites(t_game *game);
 
 // Level management
 void	load_level(t_game *game, int level_index);
@@ -120,9 +145,11 @@ int		is_valid_move(t_game *game, int x, int y);
 void	collect_item(t_game *game, int x, int y);
 
 // Rendering
+void	draw_filled_rectangle(t_game *game, int x, int y, int width, int height, int color);
 void	draw_tile(t_game *game, char tile, int x, int y);
 void	draw_map(t_game *game);
 void	draw_ui(t_game *game);
+void	draw_menu(t_game *game);
 
 // Utility functions
 void	free_game(t_game *game);

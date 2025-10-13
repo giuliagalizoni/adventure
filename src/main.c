@@ -15,14 +15,20 @@ int	init_game(t_game *game)
 		return (0);
 
 	game->current_level = 0;
-	game->state = GAME_PLAYING;
+	game->state = GAME_MENU;
 
 	// Initialize levels and player
 	if (!init_levels(game))
 		return (0);
 
-	init_player(game);
-	load_level(game, 0);  // Start with London
+	// Load sprites
+	if (!load_sprites(game))
+	{
+		printf("Error: Failed to load sprites\n");
+		return (0);
+	}
+
+	// Don't initialize player/level yet - we're starting in menu mode
 
 	return (1);
 }
@@ -32,6 +38,18 @@ int	key_press(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		close_game(game);
+
+	// Handle SPACE key in menu to start game
+	if (keycode == KEY_SPACE && game->state == GAME_MENU)
+	{
+		// Initialize the game properly when starting
+		load_level(game, 0);  // Start with London
+		init_player(game);
+		game->state = GAME_PLAYING;
+		// print_level_info(game);  // Skip for now to debug
+		render_game(game);
+		return (0);
+	}
 
 	// Handle SPACE key for level progression (works in any state)
 	if (keycode == KEY_SPACE && game->state == GAME_LEVEL_COMPLETE)
@@ -46,13 +64,25 @@ int	key_press(int keycode, t_game *game)
 
 	// Movement with WASD or arrow keys
 	if (keycode == KEY_W || keycode == KEY_UP)
+	{
 		move_player(game, 0, -1);
+		render_game(game);
+	}
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
+	{
 		move_player(game, 0, 1);
+		render_game(game);
+	}
 	else if (keycode == KEY_A || keycode == KEY_LEFT)
+	{
 		move_player(game, -1, 0);
+		render_game(game);
+	}
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
+	{
 		move_player(game, 1, 0);
+		render_game(game);
+	}
 
 	return (0);
 }
@@ -81,8 +111,8 @@ int	main(void)
 	// Initialize game structure to zero/null
 	memset(&game, 0, sizeof(t_game));
 
-	printf("🎮 Welcome to the Adventure Game! 🎮\n");
-	printf("A romantic journey through London, Paris, Rome, Berlin & Amsterdam...\n\n");
+	printf("🎮 Starting Oko's Adventure! 🎮\n");
+	printf("Loading game assets...\n");
 
 	if (!init_game(&game))
 	{
@@ -95,7 +125,8 @@ int	main(void)
 	mlx_hook(game.win, 17, 1L<<17, close_game, &game); // Window close
 	mlx_loop_hook(game.mlx, game_loop, &game);        // Main loop
 
-	print_level_info(&game);
+	// Don't print level info since we start in menu mode
+	// print_level_info(&game);
 
 	// Start the game loop
 	mlx_loop(game.mlx);
