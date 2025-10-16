@@ -73,9 +73,9 @@ int	init_levels(t_game *game)
 		"111111111111111"
 	};
 
-	// Berlin - collect döner 🥙
+	// Berlin - collect doner 🥙
 	game->levels[BERLIN].name = "Berlin";
-	game->levels[BERLIN].collectible_name = "Döner";
+	game->levels[BERLIN].collectible_name = "Doner";
 	game->levels[BERLIN].width = 15;
 	game->levels[BERLIN].height = 11;
 	game->levels[BERLIN].total_collectibles = 4;
@@ -214,10 +214,11 @@ void	advance_to_next_level(t_game *game)
 	if (game->current_level + 1 >= MAX_CITIES)
 	{
 		printf("🎉 CONGRATULATIONS! 🎉\n");
-		printf("You've completed your romantic adventure through all cities!\n");
+		printf("You've completed Oko's adventure through all cities!\n");
 		printf("What an amazing journey through London, Paris, Rome, Berlin & Amsterdam!\n");
 		printf("Time to plan your next real-world adventure! ✈️❤️\n");
 		game->state = GAME_WON;
+		render_game(game);  // Render the end game screen
 		return;
 	}
 

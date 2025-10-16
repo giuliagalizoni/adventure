@@ -14,6 +14,9 @@ void	init_player(t_game *game)
 
 	t_level *current = &game->levels[game->current_level];
 
+	if (!current->map)
+		return;
+
 	// Find player and Moka positions on the map
 	for (int y = 0; y < current->height; y++)
 	{

@@ -25,7 +25,7 @@ Join me on a romantic journey through our favorite cities - London, Paris, Rome,
 2. Collect all the special items in each city
 3. Find the **green exit** once you've collected everything
 4. Look for **Moka** (in orange) in each city!
-5. Press **SPACE** when a level is complete to continue
+5. Press **SPACE** when a level is complete to continue to the next city
 6. Press **ESC** to quit
 
 ## Game Elements

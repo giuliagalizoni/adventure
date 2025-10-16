@@ -12,13 +12,19 @@ void	update_game(t_game *game)
 // Print level information to console
 void	print_level_info(t_game *game)
 {
+	if (!game || game->current_level < 0 || game->current_level >= MAX_CITIES)
+		return;
+
 	t_level *current = &game->levels[game->current_level];
+
+	if (!current->name || !current->collectible_name)
+		return;
 
 	printf("\n=== Welcome to %s! ===\n", current->name);
 	printf("🎯 Collect all %d %s to unlock the exit!\n",
 		current->total_collectibles, current->collectible_name);
 	printf("🐕 Look for Moka somewhere in the city!\n");
-	printf("Controls: WASD or Arrow Keys to move, ESC to quit\n");
+	printf("Controls: WASD or Arrow Keys to move, SPACE for next level, ESC to quit\n");
 	printf("Progress: %d/%d %s collected\n",
 		current->collected, current->total_collectibles, current->collectible_name);
 }

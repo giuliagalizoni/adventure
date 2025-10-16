@@ -24,6 +24,7 @@ int	load_sprites(t_game *game)
 	game->sprites.rome_bg = NULL;
 	game->sprites.amsterdam_bg = NULL;
 	game->sprites.berlin_bg = NULL;
+	game->sprites.endgame_bg = NULL;
 
 	// Load player sprites
 	int width, height;
@@ -99,6 +100,10 @@ int	load_sprites(t_game *game)
 	game->sprites.berlin_bg = mlx_xpm_file_to_image(game->mlx,
 		"assets/berlin_bg.xpm", &width, &height);
 
+	// Load endgame background
+	game->sprites.endgame_bg = mlx_xpm_file_to_image(game->mlx,
+		"assets/endgame_bg.xpm", &width, &height);
+
 	printf("✅ Sprites loaded successfully!\n");
 	return (1);
 }
@@ -141,6 +146,8 @@ void	free_sprites(t_game *game)
 		mlx_destroy_image(game->mlx, game->sprites.amsterdam_bg);
 	if (game->sprites.berlin_bg)
 		mlx_destroy_image(game->mlx, game->sprites.berlin_bg);
+	if (game->sprites.endgame_bg)
+		mlx_destroy_image(game->mlx, game->sprites.endgame_bg);
 
 	// Free animation sprites
 	if (game->player_left1)

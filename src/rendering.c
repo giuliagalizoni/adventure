@@ -23,6 +23,10 @@ void	render_game(t_game *game)
 	{
 		draw_menu(game);
 	}
+	else if (game->state == GAME_WON)
+	{
+		draw_endgame(game);
+	}
 	else
 	{
 		// Clear window with a nice background color
@@ -332,7 +336,8 @@ void	draw_ui(t_game *game)
 	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 80, 0xFFD700, progress_text);
 
 	// Draw controls
-	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 60, 0xAAAAAA, "Controls: WASD or Arrow Keys to move, ESC to quit");
+	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 60, 0xAAAAAA, "Controls: WASD or Arrow Keys to move");
+	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 40, 0xAAAAAA, "SPACE for next level, ESC to quit");
 }
 
 // Draw main menu screen
@@ -363,5 +368,34 @@ void	draw_menu(t_game *game)
 
 	// Draw title using mlx_string_put (much simpler!)
 	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 100, WIN_HEIGHT - 100, 0xFFFFFF, "Press SPACE to Start");
+}
+
+// Draw end game screen with goodbye messages
+void	draw_endgame(t_game *game)
+{
+	if (!game || !game->mlx || !game->win)
+		return;
+
+	// Clear window
+	mlx_clear_window(game->mlx, game->win);
+
+	// Draw endgame background if available
+	if (game->sprites.endgame_bg)
+	{
+		mlx_put_image_to_window(game->mlx, game->win, game->sprites.endgame_bg, 0, 0);
+	}
+	else
+	{
+		// Fallback: use a simple solid color background instead of gradient
+		draw_filled_rectangle(game, 0, 0, WIN_WIDTH, WIN_HEIGHT, 0x8B4513);
+	}
+
+	// Draw congratulations messages
+	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 200, 100, 0xFFFFFF, "🎉 CONGRATULATIONS! 🎉");
+	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 250, 140, 0xFFFFFF, "You've completed Oko's adventure!");
+
+	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 200, 440, 0xFFB6C1, "Time to plan your next adventure...");
+
+	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 120, 500, 0xAAAAAA, "Press ESC to close");
 }
 

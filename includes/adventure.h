@@ -111,6 +111,7 @@ typedef struct s_sprites
 	void		*rome_bg;
 	void		*amsterdam_bg;
 	void		*berlin_bg;
+	void		*endgame_bg;
 }	t_sprites;
 
 // Game structure
@@ -170,6 +171,7 @@ void	draw_tile(t_game *game, char tile, int x, int y);
 void	draw_map(t_game *game);
 void	draw_ui(t_game *game);
 void	draw_menu(t_game *game);
+void	draw_endgame(t_game *game);
 
 // Utility functions
 void	free_game(t_game *game);

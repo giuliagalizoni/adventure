@@ -10,7 +10,7 @@ int	init_game(t_game *game)
 		return (0);
 
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT,
-		"Adventure Game - A Journey Through Our Cities 💕");
+		"Oko's Adventure");
 	if (!game->win)
 		return (0);
 
