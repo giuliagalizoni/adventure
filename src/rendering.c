@@ -35,7 +35,6 @@ void	render_game(t_game *game)
 // Draw city background across the first row
 void	draw_city_background(t_game *game)
 {
-	t_level *current = &game->levels[game->current_level];
 	void *bg_sprite = NULL;
 
 	// Select the appropriate background sprite for current city
@@ -60,18 +59,13 @@ void	draw_city_background(t_game *game)
 			return;
 	}
 
-	// Draw the background across the first two rows if sprite is loaded
+	// Draw one large background image across the first two rows
 	if (bg_sprite)
 	{
-		for (int y = 0; y < 2; y++)  // Two rows for background
-		{
-			for (int x = 0; x < current->width; x++)
-			{
-				int screen_x = MARGIN + x * TILE_SIZE;
-				int screen_y = MARGIN + y * TILE_SIZE;
-				mlx_put_image_to_window(game->mlx, game->win, bg_sprite, screen_x, screen_y);
-			}
-		}
+		// Position: start at margin, cover full width and 2 rows height
+		int bg_x = MARGIN;
+		int bg_y = MARGIN;
+		mlx_put_image_to_window(game->mlx, game->win, bg_sprite, bg_x, bg_y);
 	}
 }
 
@@ -128,7 +122,7 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 		return;
 
 	// Bounds checking
-	if (x < 0 || y < 0 || x >= 15 || y >= 10)
+	if (x < 0 || y < 0 || x >= 15 || y >= 11)
 		return;
 
 	int pixel_x = x * TILE_SIZE + 40;  // 40px margin from edge
@@ -186,6 +180,24 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 						player_sprite = game->player_right1;
 					else if (game->player.animation_frame == 1 && game->player_right2)
 						player_sprite = game->player_right2;
+				}
+				else if (game->player.direction == DIR_BACK)
+				{
+					if (game->player.animation_frame == 0 && game->player_back1)
+						player_sprite = game->player_back1;
+					else if (game->player.animation_frame == 1 && game->player_back2)
+						player_sprite = game->player_back2;
+				}
+				else if (game->player.direction == DIR_FRONT)
+				{
+					// Only use animated sprites if player has moved, otherwise use base sprite
+					if (game->player.move_count > 0)
+					{
+						if (game->player.animation_frame == 0 && game->player_front1)
+							player_sprite = game->player_front1;
+						else if (game->player.animation_frame == 1 && game->player_front2)
+							player_sprite = game->player_front2;
+					}
 				}
 
 				// Fallback to default front sprite if animated sprite not available
@@ -317,10 +329,10 @@ void	draw_ui(t_game *game)
 	// Draw progress information
 	snprintf(progress_text, sizeof(progress_text), "Progress: %d/%d %s collected",
 		current->collected, current->total_collectibles, current->collectible_name);
-	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 40, 0xFFD700, progress_text);
+	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 80, 0xFFD700, progress_text);
 
 	// Draw controls
-	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 20, 0xAAAAAA, "Controls: WASD or Arrow Keys to move, ESC to quit");
+	mlx_string_put(game->mlx, game->win, 10, WIN_HEIGHT - 60, 0xAAAAAA, "Controls: WASD or Arrow Keys to move, ESC to quit");
 }
 
 // Draw main menu screen

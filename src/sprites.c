@@ -44,8 +44,14 @@ int	load_sprites(t_game *game)
 		"assets/player_right1.xpm", &width, &height);
 	game->player_right2 = mlx_xpm_file_to_image(game->mlx,
 		"assets/player_right2.xpm", &width, &height);
-
-
+	game->player_back1 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_back1.xpm", &width, &height);
+	game->player_back2 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_back2.xpm", &width, &height);
+	game->player_front1 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_front1.xpm", &width, &height);
+	game->player_front2 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_front2.xpm", &width, &height);
 
 	// Load Moka sprite
 	game->sprites.moka = mlx_xpm_file_to_image(game->mlx,
@@ -145,4 +151,12 @@ void	free_sprites(t_game *game)
 		mlx_destroy_image(game->mlx, game->player_right1);
 	if (game->player_right2)
 		mlx_destroy_image(game->mlx, game->player_right2);
+	if (game->player_back1)
+		mlx_destroy_image(game->mlx, game->player_back1);
+	if (game->player_back2)
+		mlx_destroy_image(game->mlx, game->player_back2);
+	if (game->player_front1)
+		mlx_destroy_image(game->mlx, game->player_front1);
+	if (game->player_front2)
+		mlx_destroy_image(game->mlx, game->player_front2);
 }

@@ -130,6 +130,10 @@ typedef struct s_game
 	void		*player_left2;
 	void		*player_right1;
 	void		*player_right2;
+	void		*player_back1;
+	void		*player_back2;
+	void		*player_front1;
+	void		*player_front2;
 }	t_game;
 
 // Function prototypes
