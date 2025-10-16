@@ -121,7 +121,7 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 	if (!game || !game->mlx || !game->win)
 		return;
 
-	// Bounds checking
+	// Hardcoded bounds check (this should match your level size)
 	if (x < 0 || y < 0 || x >= 15 || y >= 11)
 		return;
 
@@ -362,7 +362,6 @@ void	draw_menu(t_game *game)
 	}
 
 	// Draw title using mlx_string_put (much simpler!)
-	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 80, 150, 0xFFFFFF, "OKO'S ADVENTURE");
-	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 80, WIN_HEIGHT - 100, 0xFFFFFF, "Press SPACE to Start");
+	mlx_string_put(game->mlx, game->win, WIN_WIDTH / 2 - 100, WIN_HEIGHT - 100, 0xFFFFFF, "Press SPACE to Start");
 }
 

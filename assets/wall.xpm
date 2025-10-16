@@ -2,9 +2,9 @@
 static char *bedf0092ff4a4e6fbe26bc8f5bfb6269[] = {
 /* columns rows colors chars-per-pixel */
 "40 40 3 1 ",
-"  c #AF783E",
-". c #BF9061",
-"X c #C48E56",
+"  c #C8B5A0",
+". c #E4C4A0",
+"X c #EECAA8",
 /* pixels */
 "........................................",
 "........................................",
