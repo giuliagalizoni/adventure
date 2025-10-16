@@ -95,11 +95,11 @@ int	close_game(t_game *game)
 	return (0);
 }
 
-// Main game loop
+// Main game loop  
 int	game_loop(t_game *game)
 {
 	update_game(game);
-	render_game(game);
+	// Only render when needed, not continuously
 	return (0);
 }
 
@@ -125,8 +125,8 @@ int	main(void)
 	mlx_hook(game.win, 17, 1L<<17, close_game, &game); // Window close
 	mlx_loop_hook(game.mlx, game_loop, &game);        // Main loop
 
-	// Don't print level info since we start in menu mode
-	// print_level_info(&game);
+	// Render the initial menu
+	render_game(&game);
 
 	// Start the game loop
 	mlx_loop(game.mlx);

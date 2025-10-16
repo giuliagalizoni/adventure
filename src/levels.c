@@ -222,5 +222,8 @@ void	advance_to_next_level(t_game *game)
 	}
 
 	load_level(game, game->current_level + 1);
+	init_player(game);  // Initialize player position for the new level
+	game->state = GAME_PLAYING;  // Set state back to playing
 	print_level_info(game);
+	render_game(game);  // Render the new level
 }

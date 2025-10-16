@@ -53,6 +53,15 @@ typedef enum e_city
 	MAX_CITIES = 5
 }	t_city;
 
+// Player direction for animations
+typedef enum e_direction
+{
+	DIR_FRONT = 0,
+	DIR_BACK = 1,
+	DIR_LEFT = 2,
+	DIR_RIGHT = 3
+}	t_direction;
+
 // Position structure
 typedef struct s_position
 {
@@ -67,6 +76,8 @@ typedef struct s_player
 	t_position	old_pos;
 	int			move_count;
 	char		sprite_char;
+	t_direction	direction;
+	int			animation_frame;  // 0 or 1 for toggling between frames
 }	t_player;
 
 // Level information
@@ -114,6 +125,11 @@ typedef struct s_game
 	t_game_state state;
 	int			moka_pos_x;  // Moka's position
 	int			moka_pos_y;
+	// Animation sprites (separate from main sprites to avoid structure issues)
+	void		*player_left1;
+	void		*player_left2;
+	void		*player_right1;
+	void		*player_right2;
 }	t_game;
 
 // Function prototypes

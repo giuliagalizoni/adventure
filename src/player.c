@@ -9,52 +9,33 @@ void	init_player(t_game *game)
 
 	game->player.move_count = 0;
 	game->player.sprite_char = 'P';
+	game->player.direction = DIR_FRONT;
+	game->player.animation_frame = 0;
 
-	// Initialize positions to safe defaults
-	game->player.pos.x = 1;
-	game->player.pos.y = 1;
-	game->player.old_pos = game->player.pos;
-	game->moka_pos_x = 1;
-	game->moka_pos_y = 1;
-
-	// Find player starting position in current level
-	for (int y = 0; y < game->levels[game->current_level].height; y++)
+	t_level *current = &game->levels[game->current_level];
+	
+	// Find player and Moka positions on the map
+	for (int y = 0; y < current->height; y++)
 	{
-		for (int x = 0; x < game->levels[game->current_level].width; x++)
+		if (!current->map[y])
+			continue;
+			
+		for (int x = 0; x < current->width; x++)
 		{
-			if (game->levels[game->current_level].map[y][x] == PLAYER)
+			if (current->map[y][x] == 'P')
 			{
 				game->player.pos.x = x;
 				game->player.pos.y = y;
 				game->player.old_pos = game->player.pos;
-
-				// Place Moka to the left of the player (preferred), otherwise right
-				if (x - 1 >= 0 &&
-					game->levels[game->current_level].map[y][x - 1] != WALL)
-				{
-					game->moka_pos_x = x - 1;
-					game->moka_pos_y = y;
-				}
-				else if (x + 1 < game->levels[game->current_level].width &&
-					game->levels[game->current_level].map[y][x + 1] != WALL)
-				{
-					game->moka_pos_x = x + 1;
-					game->moka_pos_y = y;
-				}
-				else
-				{
-					// Fallback: place Moka at the same position as player
-					game->moka_pos_x = x;
-					game->moka_pos_y = y;
-				}
-
-				// Replace the P in the map with floor so it doesn't render twice
-				game->levels[game->current_level].map[y][x] = FLOOR;
+				// Replace 'P' with floor in the map
+				current->map[y][x] = FLOOR;
 			}
-			else if (game->levels[game->current_level].map[y][x] == MOKA)
+			else if (current->map[y][x] == 'M')
 			{
-				// Replace any existing M in the map with floor (we'll position Moka dynamically now)
-				game->levels[game->current_level].map[y][x] = FLOOR;
+				game->moka_pos_x = x;
+				game->moka_pos_y = y;
+				// Replace 'M' with floor in the map
+				current->map[y][x] = FLOOR;
 			}
 		}
 	}
@@ -72,20 +53,26 @@ int	move_player(t_game *game, int dx, int dy)
 	if (!is_valid_move(game, new_x, new_y))
 		return (0);
 
+	// Update player direction based on movement
+	if (dx < 0)
+		game->player.direction = DIR_LEFT;
+	else if (dx > 0)
+		game->player.direction = DIR_RIGHT;
+	else if (dy < 0)
+		game->player.direction = DIR_BACK;
+	else if (dy > 0)
+		game->player.direction = DIR_FRONT;
+
+	// Toggle animation frame for movement animation
+	game->player.animation_frame = (game->player.animation_frame + 1) % 2;
+
 	// Update player position
 	game->player.old_pos = game->player.pos;
 	game->player.pos.x = new_x;
 	game->player.pos.y = new_y;
 	game->player.move_count++;
 
-	// Move Moka to player's old position (following behavior)
-	// Check if the old position is valid for Moka
-	if (is_valid_move(game, game->player.old_pos.x, game->player.old_pos.y))
-	{
-		game->moka_pos_x = game->player.old_pos.x;
-		game->moka_pos_y = game->player.old_pos.y;
-	}
-	// If old position is not valid, keep Moka where they are
+	// Moka stays in her static position - no following behavior
 
 	// Check for collectibles
 	char tile = game->levels[game->current_level].map[new_y][new_x];

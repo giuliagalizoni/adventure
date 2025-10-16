@@ -78,13 +78,22 @@ void	draw_city_background(t_game *game)
 // Draw the map
 void	draw_map(t_game *game)
 {
+	if (!game || game->current_level < 0 || game->current_level >= MAX_CITIES)
+		return;
+		
 	t_level *current = &game->levels[game->current_level];
+	
+	if (!current || !current->map || current->height <= 0 || current->width <= 0)
+		return;
 
 	// Draw city background first
 	draw_city_background(game);
 
 	for (int y = 0; y < current->height; y++)
 	{
+		if (!current->map[y])
+			continue;
+			
 		for (int x = 0; x < current->width; x++)
 		{
 			char tile = current->map[y][x];
@@ -159,13 +168,37 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 				color = 0xF5F5DC;  // Fallback beige floor
 				draw_filled_rectangle(game, pixel_x, pixel_y, TILE_SIZE - 2, TILE_SIZE - 2, color);
 			}
-			// Then draw player sprite if available
-			if (game->sprites.player_front)
-				mlx_put_image_to_window(game->mlx, game->win, game->sprites.player_front, pixel_x, pixel_y);
-			else
+			// Then draw player sprite based on direction and animation frame
 			{
-				color = 0xFF1493;  // Fallback pink color
-				draw_filled_rectangle(game, pixel_x, pixel_y, TILE_SIZE - 2, TILE_SIZE - 2, color);
+				void *player_sprite = NULL;
+				
+				// Select sprite based on direction and animation frame
+				if (game->player.direction == DIR_LEFT)
+				{
+					if (game->player.animation_frame == 0 && game->player_left1)
+						player_sprite = game->player_left1;
+					else if (game->player.animation_frame == 1 && game->player_left2)
+						player_sprite = game->player_left2;
+				}
+				else if (game->player.direction == DIR_RIGHT)
+				{
+					if (game->player.animation_frame == 0 && game->player_right1)
+						player_sprite = game->player_right1;
+					else if (game->player.animation_frame == 1 && game->player_right2)
+						player_sprite = game->player_right2;
+				}
+				
+				// Fallback to default front sprite if animated sprite not available
+				if (!player_sprite)
+					player_sprite = game->sprites.player_front;
+				
+				if (player_sprite)
+					mlx_put_image_to_window(game->mlx, game->win, player_sprite, pixel_x, pixel_y);
+				else
+				{
+					color = 0xFF1493;  // Fallback pink color
+					draw_filled_rectangle(game, pixel_x, pixel_y, TILE_SIZE - 2, TILE_SIZE - 2, color);
+				}
 			}
 			break;
 		case COLLECTIBLE:

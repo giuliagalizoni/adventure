@@ -25,7 +25,7 @@ int	load_sprites(t_game *game)
 	game->sprites.amsterdam_bg = NULL;
 	game->sprites.berlin_bg = NULL;
 
-	// Load player sprite
+	// Load player sprites
 	int width, height;
 	game->sprites.player_front = mlx_xpm_file_to_image(game->mlx,
 		"assets/player_front.xpm", &width, &height);
@@ -34,6 +34,18 @@ int	load_sprites(t_game *game)
 		printf("Error: Could not load player_front.xpm\n");
 		return (0);
 	}
+
+	// Load animation sprites (optional - won't fail if missing)
+	game->player_left1 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_left1.xpm", &width, &height);
+	game->player_left2 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_left2.xpm", &width, &height);
+	game->player_right1 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_right1.xpm", &width, &height);
+	game->player_right2 = mlx_xpm_file_to_image(game->mlx,
+		"assets/player_right2.xpm", &width, &height);
+
+
 
 	// Load Moka sprite
 	game->sprites.moka = mlx_xpm_file_to_image(game->mlx,
@@ -121,4 +133,14 @@ void	free_sprites(t_game *game)
 		mlx_destroy_image(game->mlx, game->sprites.amsterdam_bg);
 	if (game->sprites.berlin_bg)
 		mlx_destroy_image(game->mlx, game->sprites.berlin_bg);
+
+	// Free animation sprites
+	if (game->player_left1)
+		mlx_destroy_image(game->mlx, game->player_left1);
+	if (game->player_left2)
+		mlx_destroy_image(game->mlx, game->player_left2);
+	if (game->player_right1)
+		mlx_destroy_image(game->mlx, game->player_right1);
+	if (game->player_right2)
+		mlx_destroy_image(game->mlx, game->player_right2);
 }
