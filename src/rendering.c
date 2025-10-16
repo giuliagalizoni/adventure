@@ -243,8 +243,17 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 			}
 			break;
 		case EXIT:
-			color = 0x00FF00;  // Green exit
-			draw_filled_rectangle(game, pixel_x, pixel_y, TILE_SIZE - 2, TILE_SIZE - 2, color);
+			// Draw floor first
+			if (game->sprites.floor)
+				mlx_put_image_to_window(game->mlx, game->win, game->sprites.floor, pixel_x, pixel_y);
+			// Then draw exit sprite if available
+			if (game->sprites.exit)
+				mlx_put_image_to_window(game->mlx, game->win, game->sprites.exit, pixel_x, pixel_y);
+			else
+			{
+				color = 0x00FF00;  // Fallback green exit
+				draw_filled_rectangle(game, pixel_x, pixel_y, TILE_SIZE - 2, TILE_SIZE - 2, color);
+			}
 			break;
 		case MOKA:
 			// Draw floor first

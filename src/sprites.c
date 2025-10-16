@@ -74,6 +74,8 @@ int	load_sprites(t_game *game)
 		"assets/wall.xpm", &width, &height);
 	game->sprites.floor = mlx_xpm_file_to_image(game->mlx,
 		"assets/floor.xpm", &width, &height);
+	game->sprites.exit = mlx_xpm_file_to_image(game->mlx,
+		"assets/exit_1.xpm", &width, &height);
 
 	// Load menu background
 	game->sprites.menu_bg = mlx_xpm_file_to_image(game->mlx,
