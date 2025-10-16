@@ -80,9 +80,9 @@ void	draw_map(t_game *game)
 {
 	if (!game || game->current_level < 0 || game->current_level >= MAX_CITIES)
 		return;
-		
+
 	t_level *current = &game->levels[game->current_level];
-	
+
 	if (!current || !current->map || current->height <= 0 || current->width <= 0)
 		return;
 
@@ -93,7 +93,7 @@ void	draw_map(t_game *game)
 	{
 		if (!current->map[y])
 			continue;
-			
+
 		for (int x = 0; x < current->width; x++)
 		{
 			char tile = current->map[y][x];
@@ -171,7 +171,7 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 			// Then draw player sprite based on direction and animation frame
 			{
 				void *player_sprite = NULL;
-				
+
 				// Select sprite based on direction and animation frame
 				if (game->player.direction == DIR_LEFT)
 				{
@@ -187,11 +187,11 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 					else if (game->player.animation_frame == 1 && game->player_right2)
 						player_sprite = game->player_right2;
 				}
-				
+
 				// Fallback to default front sprite if animated sprite not available
 				if (!player_sprite)
 					player_sprite = game->sprites.player_front;
-				
+
 				if (player_sprite)
 					mlx_put_image_to_window(game->mlx, game->win, player_sprite, pixel_x, pixel_y);
 				else

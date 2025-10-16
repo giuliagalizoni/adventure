@@ -13,13 +13,13 @@ void	init_player(t_game *game)
 	game->player.animation_frame = 0;
 
 	t_level *current = &game->levels[game->current_level];
-	
+
 	// Find player and Moka positions on the map
 	for (int y = 0; y < current->height; y++)
 	{
 		if (!current->map[y])
 			continue;
-			
+
 		for (int x = 0; x < current->width; x++)
 		{
 			if (current->map[y][x] == 'P')

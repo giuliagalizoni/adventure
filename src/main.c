@@ -95,7 +95,7 @@ int	close_game(t_game *game)
 	return (0);
 }
 
-// Main game loop  
+// Main game loop
 int	game_loop(t_game *game)
 {
 	update_game(game);
