@@ -1,39 +1,20 @@
 # Adventure ## Cities & Collectibles
-- 🇬🇧 **London**: Pints of Cider (3 to collect)
-- 🇫🇷 **Paris**: Croissants (4 to collect)
-- 🇮🇹 **Rome**: Gelatos (5 to collect)
-- 🇩🇪 **Berlin**: Döner (6 to collect)
-- 🇳🇱 **Amsterdam**: Stroopwafels (7 to collect)
+- 🇬🇧 **London**: Pints of Cider
+- 🇫🇷 **Paris**: Croissants
+- 🇮🇹 **Rome**: Gelatos
+- 🇳🇱 **Amsterdam**: Stroopwafels
+- 🇩🇪 **Berlin**: Döner
 
-A### Game Elements Visual Guide:**
-- 🟫 **Brown blocks:** Walls (can't pass through)
-- 🟡 **Yellow dots:** Collectibles (city treats)
-- 🟢 **Green square:** Exit (unlocked after collecting all items)
-- 🟣 **Pink square:** You, the player!
-- 🟠 **Orange dot:** Moka, your dog companiononalized adventure game built with minilibX as a birthday present! 🎮
 
 ## Story
 Join me on a romantic journey through our favorite cities - London, Paris, Rome, Berlin, and Amsterdam! Collect special treats from each city while exploring with our beloved dog Moka.
 
-## Cities & Collectibles
-- 🇬🇧 **London**: Fish & Chips (3 to collect)
-- 🇫🇷 **Paris**: Croissants (4 to collect)
-- 🇮🇹 **Rome**: Gelatos (5 to collect)
-- 🇩🇪 **Berlin**: Döner (6 to collect)
-- 🇳🇱 **Amsterdam**: Stroopwafels (7 to collect)## How to Play
 1. Use **WASD** or **Arrow Keys** to move around
 2. Collect all the special items in each city
 3. Find the **green exit** once you've collected everything
-4. Look for **Moka** (in orange) in each city!
+4. Look for **Moka** in each city!
 5. Press **SPACE** when a level is complete to continue to the next city
 6. Press **ESC** to quit
-
-## Game Elements
-- 🟫 **Brown blocks**: Walls (can't pass through)
-- 🟡 **Yellow dots**: Collectibles (city treats)
-- 🟢 **Green square**: Exit (unlocked after collecting all items)
-- 🟣 **Pink square**: You, the player!
-- � **Orange dot**: Moka, our dog companion
 
 ## Compilation & Running
 
@@ -93,53 +74,13 @@ make fclean
 make re
 ```
 
-## Game Features
-- **Multiple themed levels** with increasing difficulty
-- **Collectible system** with different items per city
-- **Simple collision detection**
-- **Level progression** - complete one city to unlock the next
-- **Moka companion** appears in every level
-- **Move counter** to track your steps
-- **Beautiful city-themed maps** representing our travels
-
-## Project Structure
-```
-adventure/
-├── src/           # Source code files
-│   ├── main.c     # Main game loop and initialization
-│   └── game.c     # Game logic and rendering
-├── includes/      # Header files
-│   └── adventure.h
-├── assets/        # Game sprites (XPM format)
-│   ├── cider.xpm
-│   ├── croissant.xpm
-│   ├── döner.xpm
-│   ├── gelato.xpm
-│   ├── moka.xpm
-│   ├── player_*.xpm
-│   └── stroopwafel.xpm
-├── obj/           # Compiled object files (auto-generated)
-├── minilibx/      # MinilibX graphics library
-└── Makefile       # Build configuration
-```
-
 ## Technical Details
 - Built with **minilibX** graphics library
 - Written in **C** following 42 school standards
 - Uses **tile-based rendering** system (40×40 pixel tiles)
-- **Optimized window size** (680×480) perfectly fits the 15×10 map
 - **Event-driven** input handling
 - **Professional project structure** with organized directories
 - **XPM sprite assets** ready for implementation
-
-## Future Enhancements Ideas
-- Add sprite images instead of colored squares
-- Include background music for each city
-- Add simple enemies or obstacles
-- Create more detailed, larger maps
-- Add animation for player movement
-- Include a high-score system
-- Add sound effects for collecting items
 
 ## Controls Summary
 | Key | Action |
